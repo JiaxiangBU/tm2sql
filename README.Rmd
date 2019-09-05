@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
 # tm2sql
 
 <!-- badges: start -->
+[![DOI](https://zenodo.org/badge/206491593.svg)](https://zenodo.org/badge/latestdoi/206491593)
 <!-- badges: end -->
 
 The goal of tm2sql is to translate topic model into SQL.
@@ -57,6 +58,25 @@ beta_df <- data.frame(dict = c("文本", "分析", "学习", "笔记"),
                       loading = c(0.1, 0.2, 0.3, 0.4))
 calc_topic_score_sql(beta_df, dict, loading)
 ```
+
+## Citations
+
+```{r include=FALSE}
+citations <- add2pkg::add_zenodo_citation("README.Rmd")
+```
+
+```{r echo=FALSE, results='asis'}
+cat(citations$Cite)
+```
+
+```{r echo=FALSE, results='asis'}
+cat(paste0("```BibTex\n",citations$BibTex,"\n```"))
+```
+
+```{r echo=FALSE, results='asis'}
+cat(citations$Comments)
+```
+
 
 ***
 
