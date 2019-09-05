@@ -20,6 +20,19 @@ knitr::opts_chunk$set(
 The goal of tm2sql is to translate topic model into SQL.
 I use it into production by impala successfully.
 
+```{r echo=FALSE}
+nomnoml::nomnoml("
+#stroke: #a86128
+[<frame>tm2sql 实现过程|
+    [<abstract>Impala||RODBC::sqlQuery]
+    [<abstract>R||tm2sql]
+    [<abstract>SQL||tm2sql::calc_topic_score_sql]
+    [Impala] --> [R]
+    [R] --> [SQL]
+]
+")
+```
+
 ## Installation
 
 The development version from [GitHub](https://github.com/) with:
@@ -35,7 +48,14 @@ This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
 library(tm2sql)
+library(tidyverse)
 ## basic example code
+```
+
+```{r}
+beta_df <- data.frame(dict = c("文本", "分析", "学习", "笔记"),
+                      loading = c(0.1, 0.2, 0.3, 0.4))
+calc_topic_score_sql(beta_df, dict, loading)
 ```
 
 ***

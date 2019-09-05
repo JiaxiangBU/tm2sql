@@ -153,7 +153,7 @@ end_time - start_time
 # add examlpes ------------------------------------------------------------
 
 clipr::read_clip() %>%
-    str_c("#' ", .) %>%
+    stringr::str_c("#' ", .) %>%
     clipr::write_clip()
 
 clipr::read_clip() %>%
