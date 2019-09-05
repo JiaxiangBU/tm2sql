@@ -7,10 +7,7 @@
 library(devtools)
 use_git()
 
-# https://github.com/JiaxiangBU/add2impala/blob/master/DESCRIPTION
-file.edit("DESCRIPTION")
 library(devtools)
-
 use_build_ignore("dev_history_r_pkg.R")
 use_roxygen_md()
 use_pipe()
@@ -36,19 +33,28 @@ file.edit("DESCRIPTION")
 
 # prettify ----------------------------------------------------------------
 
+if (file.exists("README.Rmd")) {
+    file.rename("README.Rmd", "README-bak.Rmd")
+    file.edit("README-bak.Rmd")
+}
 use_readme_rmd()
-# help translate XGBoost model R object into SQL statement.
-file.edit("DESCRIPTION")
+file.edit("README.Rmd")
+file.remove("README-bak.Rmd")
 rmarkdown::render("README.Rmd")
+rstudioapi::viewer("README.html")
 file.remove("README.html")
+
 
 
 # build -------------------------------------------------------------------
 
+library(devtools)
 document()
-# load_all()
-install()
+load_all()
 
+library(devtools)
+document()
+install()
 
 # commit
 
@@ -70,6 +76,17 @@ rstudioapi::viewer("README.html")
 file.remove("README.html")
 usethis::use_code_of_conduct()
 
+# add commit --------------------------------------------------------------
+
+glue::glue("Add metadata
+
+1. license
+1. readme
+1. namespace
+1. desc
+1. coc
+1. `%>%`
+") %>% clipr::write_clip()
 
 # publish -----------------------------------------------------------------
 
