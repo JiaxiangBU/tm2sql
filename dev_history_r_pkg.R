@@ -1,9 +1,6 @@
 
 # setup -------------------------------------------------------------------
 
-
-
-
 library(devtools)
 use_git()
 
@@ -16,20 +13,22 @@ library(magrittr)
 options(usethis.full_name = "Jiaxiang Li")
 use_mit_license()
 
-
-# rm packrat --------------------------------------------------------------
-
 # rm -rf packrat
-
 
 # desc --------------------------------------------------------------------
 
 add2pkg::add_me(is_paste = TRUE)
 file.edit("DESCRIPTION")
 
-# coding ------------------------------------------------------------------
+# add disclaimer ----------------------------------------------------------
 
-# add title
+file.edit("DESCRIPTION")
+clipr::write_clip('`r add2pkg::add_disclaimer("Jiaxiang Li")`')
+file.edit("README.Rmd")
+rmarkdown::render("README.Rmd")
+rstudioapi::viewer("README.html")
+file.remove("README.html")
+usethis::use_code_of_conduct()
 
 # prettify ----------------------------------------------------------------
 
@@ -44,7 +43,21 @@ rmarkdown::render("README.Rmd")
 rstudioapi::viewer("README.html")
 file.remove("README.html")
 
+# add commit --------------------------------------------------------------
 
+glue::glue("Add metadata
+
+1. license
+1. readme
+1. namespace
+1. desc
+1. coc
+1. `%>%`
+") %>% clipr::write_clip()
+
+# coding ------------------------------------------------------------------
+
+# add title
 
 # build -------------------------------------------------------------------
 
@@ -64,29 +77,6 @@ use_news_md()
 file.edit("NEWS.md")
 use_version()
 usethis::use_github_release()
-
-
-# add disclaimer ----------------------------------------------------------
-
-file.edit("DESCRIPTION")
-clipr::write_clip('`r add2pkg::add_disclaimer("Jiaxiang Li")`')
-file.edit("README.Rmd")
-rmarkdown::render("README.Rmd")
-rstudioapi::viewer("README.html")
-file.remove("README.html")
-usethis::use_code_of_conduct()
-
-# add commit --------------------------------------------------------------
-
-glue::glue("Add metadata
-
-1. license
-1. readme
-1. namespace
-1. desc
-1. coc
-1. `%>%`
-") %>% clipr::write_clip()
 
 # publish -----------------------------------------------------------------
 
@@ -135,13 +125,6 @@ safely(file.remove)("README.html")
 # add vignette ------------------------------------------------------------
 
 use_vignette("lift_chart")
-
-# build -------------------------------------------------------------------
-
-document()
-# load_all()
-install()
-
 
 # pkgdown -----------------------------------------------------------------
 
