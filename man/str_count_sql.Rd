@@ -11,5 +11,5 @@ str_count_sql(input = "x1", regexp = "测试", is_rename = TRUE,
 Count the regular expression frequency.
 }
 \examples{
-\dontrun{str_count_sql(input = "x1", regexp = "娴嬭瘯")}
+\dontrun{select length(regexp_replace("娴嬭瘯璇曟祴", "[^娴媇[^璇昡",""))/length("娴嬭瘯") as x1}
 }

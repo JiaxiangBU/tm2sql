@@ -1,14 +1,21 @@
 #' Count the regular expression frequency.
 #'
+#' @importFrom stringr str_split str_flatten
 #' @examples
-#' \dontrun{str_count_sql(input = "x1", regexp = "测试")}
+#' \dontrun{select length(regexp_replace("测试试测", "[^测][^试]",""))/length("测试") as x1}
 str_count_sql <-
     function(input = "x1",
              regexp = "测试",
              is_rename = TRUE,
              output = input) {
+        pattern <-
+            regexp %>%
+            stringr::str_split("") %>%
+            .[[1]] %>%
+            paste0("[^",.,"]") %>%
+            stringr::str_flatten("")
         text <-
-            glue::glue('length(regexp_replace({input}, "[^{regexp}]",""))/length("{regexp}")')
+            glue::glue('length(regexp_replace({input}, "{pattern}",""))/length("{regexp}")')
         if (is_rename == TRUE) {
             text <- glue::glue('{text} as {output}')
         }
