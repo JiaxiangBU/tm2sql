@@ -8,14 +8,11 @@ str_count_sql <-
              regexp = "测试",
              is_rename = TRUE,
              output = input) {
-        pattern <-
-            regexp %>%
-            stringr::str_split("") %>%
-            .[[1]] %>%
-            paste0("[^",.,"]") %>%
-            stringr::str_flatten("")
+        drop_text_sql <-
+            glue::glue('regexp_replace({input}, "[^{regexp}]"," ")')
+
         text <-
-            glue::glue('length(regexp_replace({input}, "{pattern}",""))/length("{regexp}")')
+            glue::glue('(length(regexp_replace({drop_text_sql}, "{regexp}", "")) - length({drop_text_sql}))/length("{regexp}")*(-1)')
         if (is_rename == TRUE) {
             text <- glue::glue('{text} as {output}')
         }
